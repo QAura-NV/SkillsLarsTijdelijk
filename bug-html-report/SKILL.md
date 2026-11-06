@@ -1,13 +1,13 @@
 ---
 name: bug-html-report
-description: Maakt van één of alle .txt-bugtickets uit bugs/ een overzichtelijk HTML-rapport in de stijl van het Playwright HTML-rapport (lijst met filter op ernst en zoekveld, detailpagina per bug, screenshots en video's), voor stakeholders. Vraagt welke tickets, welke screenshots/video's bij welk ticket horen, de taal, en of er een zip gemaakt moet worden om te versturen. Gebruik dit wanneer de gebruiker bugs wil tonen, delen of versturen aan stakeholders, of een HTML-rapport, overzicht of zip van de bugtickets wil.
+description: Maakt van één of alle .txt-bugtickets uit skills-bugs/ een overzichtelijk HTML-rapport in de stijl van het Playwright HTML-rapport (lijst met filter op ernst en zoekveld, detailpagina per bug, screenshots en video's), voor stakeholders. Vraagt welke tickets, welke screenshots/video's bij welk ticket horen, de taal, en of er een zip gemaakt moet worden om te versturen. Gebruik dit wanneer de gebruiker bugs wil tonen, delen of versturen aan stakeholders, of een HTML-rapport, overzicht of zip van de bugtickets wil.
 ---
 
 # HTML-rapport van bugtickets
 
 ## Doel
 
-De bugtickets uit `bugs/` (gemaakt met `bug-create-report`) omzetten naar **één HTML-pagina** die stakeholders zonder tools kunnen openen:
+De bugtickets uit `skills-bugs/` (gemaakt met `bug-create-report`) omzetten naar **één HTML-pagina** die stakeholders zonder tools kunnen openen:
 
 - een **lijst** zoals het Playwright-rapport: filter-chips per ernst met aantallen, een zoekveld, één rij per bug met ernst, prioriteit, datum en aantal bijlagen;
 - een **detailpagina** per bug met alle velden, de stappen als genummerde lijst, de screenshots en video's, en een link naar het originele ticket;
@@ -17,12 +17,12 @@ Het rapport wordt gemaakt door het script **`generate.js`** naast deze skill. Sc
 
 ## Werkwijze
 
-1. **Inventariseer** met Glob: de tickets `bugs/*.txt` en mogelijke bijlagen in `bugs/` en `bugs/media/` (afbeeldingen: png, jpg, jpeg, gif, webp, svg, bmp; video: mp4, webm, ogg, mov, m4v; andere bestanden zoals logs worden een downloadlink). Negeer `bugs/reports/`.
+1. **Inventariseer** met Glob: de tickets `skills-bugs/*.txt` en mogelijke bijlagen in `skills-bugs/` en `skills-bugs/media/` (afbeeldingen: png, jpg, jpeg, gif, webp, svg, bmp; video: mp4, webm, ogg, mov, m4v; andere bestanden zoals logs worden een downloadlink). Negeer `skills-bugs/reports/`.
    - Geen tickets: meld het en stel `bug-create-report` voor.
 2. **Lees elk ticket** dat in aanmerking komt. Staat er iets in dat op een wachtwoord, token of ander geheim lijkt, **stop en meld het**: het rapport gaat naar stakeholders. Ga pas verder als de gebruiker het ticket aanpaste of uitdrukkelijk akkoord gaf.
 3. **Vraag** met één AskUserQuestion (voorstel als eerste optie):
    - **Welke tickets**: alle tickets, of één ticket (welk). Zijn er meer dan drie tickets, bied dan "Alle tickets" en "Eén ticket" aan en vraag daarna welk ticket, met de titels als opties of via "Other".
-   - **Bijlagen**: zijn er screenshots of video's? Toon de bestanden die je in stap 1 vond. Zijn er nog geen, zeg dan dat de gebruiker ze in **`bugs/media/`** mag plaatsen en daarna laat weten.
+   - **Bijlagen**: zijn er screenshots of video's? Toon de bestanden die je in stap 1 vond. Zijn er nog geen, zeg dan dat de gebruiker ze in **`skills-bugs/media/`** mag plaatsen en daarna laat weten.
    - **Taal** van het rapport (knoppen en labels): Nederlands of Engels. Voorstel: de taal van de tickets. De inhoud van de tickets wordt nooit vertaald.
    - **Zip**: moet er een zip gemaakt worden om het rapport makkelijk te versturen?
 4. **Koppel de bijlagen aan de tickets** (enkel als er bijlagen zijn): stel een koppeling voor op basis van de bestandsnamen die in het veld **Bijlagen / Attachments** van elk ticket staan, en vraag de gebruiker die te bevestigen of aan te vullen. Gok nooit: een bijlage die je niet kan koppelen, vraag je. Een bijlage mag bij meerdere tickets horen.
@@ -33,35 +33,35 @@ Het rapport wordt gemaakt door het script **`generate.js`** naast deze skill. Sc
    ```
    ```json
    {
-     "outDir": "bugs/reports/2026-11-05_10-30_alle-bugs",
+     "outDir": "skills-bugs/reports/2026-11-05_10-30_alle-bugs",
      "title": "Bugrapport",
      "lang": "nl",
      "tickets": [
-       { "file": "bugs/2026-11-04_12-27_admin-krijgt-verkeerd-bedrag.txt", "attachments": ["bugs/media/premie.png", "bugs/media/premie.mp4"] },
-       { "file": "bugs/2026-11-04_09-47_inloggen-mislukt.txt", "attachments": [] }
+       { "file": "skills-bugs/2026-11-04_12-27_admin-krijgt-verkeerd-bedrag.txt", "attachments": ["skills-bugs/media/premie.png", "skills-bugs/media/premie.mp4"] },
+       { "file": "skills-bugs/2026-11-04_09-47_inloggen-mislukt.txt", "attachments": [] }
      ]
    }
    ```
    Het script kopieert de tickets naar `tickets/` en de bijlagen naar `attachments/<ticket>/` in de outputmap, en schrijft `index.html`. Het weigert een outputmap die al bestaat.
 7. **Zip** (enkel als de gebruiker dat wou), de **inhoud** van de outputmap, met de zip ernaast:
-   - Windows (PowerShell): `Compress-Archive -Path "bugs/reports/<naam>/*" -DestinationPath "bugs/reports/<naam>.zip"`
-   - macOS/Linux (Bash): `cd bugs/reports/<naam> && zip -r ../<naam>.zip .`
+   - Windows (PowerShell): `Compress-Archive -Path "skills-bugs/reports/<naam>/*" -DestinationPath "skills-bugs/reports/<naam>.zip"`
+   - macOS/Linux (Bash): `cd skills-bugs/reports/<naam> && zip -r ../<naam>.zip .`
 8. **Rapporteer** (zie "Rapporteren").
 
-De originele tickets en bijlagen in `bugs/` worden **nooit** gewijzigd, verplaatst of verwijderd: het script kopieert ze enkel.
+De originele tickets en bijlagen in `skills-bugs/` worden **nooit** gewijzigd, verplaatst of verwijderd: het script kopieert ze enkel.
 
 ## Output
 
 ```
-bugs/reports/<YYYY-MM-DD>_<HH-mm>_<korte-beschrijving>/
+skills-bugs/reports/<YYYY-MM-DD>_<HH-mm>_<korte-beschrijving>/
   index.html                         # het rapport, opent in elke browser
   tickets/<ticket>.txt               # kopie van elk originele ticket
   attachments/<ticket>/<bestand>     # kopie van de bijlagen per ticket
-bugs/reports/<YYYY-MM-DD>_<HH-mm>_<korte-beschrijving>.zip   # enkel op vraag
+skills-bugs/reports/<YYYY-MM-DD>_<HH-mm>_<korte-beschrijving>.zip   # enkel op vraag
 ```
 
 - Korte beschrijving: kleine letters, kebab-case, zonder accenten, maximaal ±50 tekens, in de taal van het rapport: bv. `alle-bugs` / `all-bugs`, of de korte beschrijving uit de bestandsnaam van het ene ticket.
-- `bugs/` staat in `.gitignore`, dus ook de rapporten en zips.
+- `skills-bugs/` staat in `.gitignore`, dus ook de rapporten en zips.
 - Het rapport is **zelfstandig**: geen internet of server nodig. Verstuur altijd de **hele map of de zip**, niet enkel `index.html`, anders ontbreken de bijlagen.
 
 ## Enkel het formaat van bug-create-report
@@ -85,7 +85,7 @@ Weergave:
 
 Na het genereren:
 - Controleer dat het script geen fout gaf en dat het aantal tickets en bijlagen in zijn output klopt.
-- Bied aan om het rapport te openen: `start "" "bugs/reports/<naam>/index.html"` (Windows) of `open` (macOS). Open het niet zonder te vragen.
+- Bied aan om het rapport te openen: `start "" "skills-bugs/reports/<naam>/index.html"` (Windows) of `open` (macOS). Open het niet zonder te vragen.
 
 ## Rapporteren
 

@@ -1,6 +1,6 @@
 ---
 name: aut-why-did-this-pass
-description: Onderzoekt groene Playwright-tests met de vraag of ze terecht groen zijn - het omgekeerde van debuggen. Leest de test, page objects en fixtures op assertions die niet kunnen falen, niet uitgevoerd worden of het verkeerde controleren, bekijkt de trace van een groene run, en bewijst met sabotage in een tijdelijke kopie (verwachte waarde fout zetten, actie overslaan, app-respons breken via page.route) of de test rood kan worden. Oordeelt per test terecht groen, twijfelachtig groen of vals groen, schrijft de analyse weg in analyses/ en past zelf nooit code aan. Gebruik dit wanneer de gebruiker vraagt waarom een test groen is, of een test wel iets test, of een test terecht slaagt, of hij vals positief is, of de tests te vertrouwen zijn, of wanneer een test groen is terwijl de app stuk lijkt.
+description: Onderzoekt groene Playwright-tests met de vraag of ze terecht groen zijn - het omgekeerde van debuggen. Leest de test, page objects en fixtures op assertions die niet kunnen falen, niet uitgevoerd worden of het verkeerde controleren, bekijkt de trace van een groene run, en bewijst met sabotage in een tijdelijke kopie (verwachte waarde fout zetten, actie overslaan, app-respons breken via page.route) of de test rood kan worden. Oordeelt per test terecht groen, twijfelachtig groen of vals groen, schrijft de analyse weg in skills-analyses/ en past zelf nooit code aan. Gebruik dit wanneer de gebruiker vraagt waarom een test groen is, of een test wel iets test, of een test terecht slaagt, of hij vals positief is, of de tests te vertrouwen zijn, of wanneer een test groen is terwijl de app stuk lijkt.
 ---
 
 # Why did this pass?
@@ -24,7 +24,7 @@ De skill **onderzoekt en stelt voor, maar past zelf nooit iets aan**: geen tests
 Haal uit de vraag, en vraag wat ontbreekt:
 - **welke test(s)**: testfile en testtitel, een hele testfile, of een domein (`tests/<domein>/`). Bij meer dan 5 tests: vraag of de gebruiker ze allemaal wil, of eerst de belangrijkste;
 - **wat de test hoort te bewijzen**: de functionele beschrijving of de Testmo-case. Staat er een case-nummer in de code (bv. `case #12696`) of noemt de gebruiker er een, lees die case dan via de Testmo MCP. Zonder beschrijving leid je het verwachte resultaat af uit de testtitel (`Wanneer <actie>, <verwacht resultaat>`), en zeg je dat;
-- **eventuele aanleiding**: een bugticket in `bugs/`, een analyse in `analyses/`, of een melding dat de app stuk is.
+- **eventuele aanleiding**: een bugticket in `skills-bugs/`, een analyse in `skills-analyses/`, of een melding dat de app stuk is.
 
 ## Werkwijze
 
@@ -35,7 +35,7 @@ Haal uit de vraag, en vraag wat ontbreekt:
 5. **Groene run bekijken** (met toestemming, zie "Draaien"): tel welke assertions echt uitgevoerd zijn en wat de pagina toonde op het moment van de assertion.
 6. **Sabotage** (met toestemming): bewijs dat de test rood kan worden.
 7. **Oordelen** per test (zie "Oordeel").
-8. **Wegschrijven** naar `analyses/` (zie "Sjabloon") en **rapporteren** in de chat.
+8. **Wegschrijven** naar `skills-analyses/` (zie "Sjabloon") en **rapporteren** in de chat.
 9. **Volgende stap** voorstellen (zie "Doorgeven"). Doe niets zonder akkoord.
 
 Stap 5 en 6 mogen overgeslagen worden als de gebruiker niet wil draaien. Het oordeel steunt dan enkel op stap 3 en 4: zeg dat, en zet de zekerheid hoogstens op **middel**.
@@ -158,15 +158,15 @@ Een voorstel **verzwakt nooit** een assertion en voegt geen `waitForTimeout`, re
 ## Bestandsnaam
 
 ```
-analyses/<YYYY-MM-DD>_<HH-mm>_groen-<korte-beschrijving>.md
-analyses/<YYYY-MM-DD>_<HH-mm>_groen-<korte-beschrijving>/   (traces van de groene run en de sabotagerun)
+skills-analyses/<YYYY-MM-DD>_<HH-mm>_groen-<korte-beschrijving>.md
+skills-analyses/<YYYY-MM-DD>_<HH-mm>_groen-<korte-beschrijving>/   (traces van de groene run en de sabotagerun)
 ```
 
 - Datum en tijd van het systeem, met `date "+%Y-%m-%d_%H-%M"` (Bash). Geen `:` in de naam.
 - Het voorvoegsel `groen-` onderscheidt deze analyses van die van `bug-analyze-test-failure`.
 - Korte beschrijving in het Nederlands, kleine letters, kebab-case, zonder accenten, maximaal ±50 tekens. Bv. `groen-installatiepagina-titels`.
 - Bewaar ook de **inhoud van de sabotagekopie** als `sabotage.spec.ts.txt` in de bewijsmap (`.txt`, zodat Playwright hem niet oppikt), zodat de varianten na verwijdering van de kopie nog na te lezen zijn.
-- `analyses/` staat in `.gitignore`. Maak de map aan als ze nog niet bestaat.
+- `skills-analyses/` staat in `.gitignore`. Maak de map aan als ze nog niet bestaat.
 
 ## Sjabloon
 
@@ -178,7 +178,7 @@ Eén bestand per oproep. De sectie `## Test` komt één keer per onderzochte tes
 - **Datum en tijd:** <YYYY-MM-DD HH:mm>
 - **Onderzocht:** <testfile(s)>
 - **Verwachting uit:** Testmo-case #<nr> | functionele beschrijving van de gebruiker | testtitel (geen beschrijving)
-- **Bewijs:** `analyses/<naam>/`
+- **Bewijs:** `skills-analyses/<naam>/`
 
 ## Samenvatting
 

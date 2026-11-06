@@ -1,6 +1,6 @@
 ---
 name: bug-create-report
-description: Schrijft een bugticket uit volgens de bug reporting template van het team (titel "As a ..., I can ...", probleembeschrijving, stappen, verwacht/werkelijk resultaat, severity, priority, tijdstip, statistieken, workaround, omgeving, aanvullende info, bijlagen) op basis van een functionele beschrijving van de gebruiker (tester of developer), en bewaart het als .txt-bestand in de map bugs/, in het Nederlands of Engels. Gebruik dit wanneer de gebruiker een bug, fout of afwijkend gedrag wil melden, uitschrijven of als ticket wil vastleggen.
+description: Schrijft een bugticket uit volgens de bug reporting template van het team (titel "As a ..., I can ...", probleembeschrijving, stappen, verwacht/werkelijk resultaat, severity, priority, tijdstip, statistieken, workaround, omgeving, aanvullende info, bijlagen) op basis van een functionele beschrijving van de gebruiker (tester of developer), en bewaart het als .txt-bestand in de map skills-bugs/, in het Nederlands of Engels. Gebruik dit wanneer de gebruiker een bug, fout of afwijkend gedrag wil melden, uitschrijven of als ticket wil vastleggen.
 ---
 
 # Bugticket uitschrijven
@@ -10,7 +10,7 @@ Het ticket volgt de **bug reporting template van het team**: een vaste structuur
 Deze skill heeft twee modi:
 
 - **Manuele modus** (standaard): de gebruiker, vaak een **manuele functionele tester**, beschrijft de bug. Alle informatie in het ticket komt **van de gebruiker**, niet uit het Playwright-framework. Zie "Bronnen: enkel wat de gebruiker vertelt".
-- **Testmodus**: de skill wordt aangeroepen vanuit `bug-analyze-test-failure` met een analyse van een gefaalde Playwright-test. Zie "Testmodus" onderaan. Gebruik deze modus **enkel** als je vanuit `bug-analyze-test-failure` komt of als de gebruiker expliciet naar een analyse in `analyses/` verwijst.
+- **Testmodus**: de skill wordt aangeroepen vanuit `bug-analyze-test-failure` met een analyse van een gefaalde Playwright-test. Zie "Testmodus" onderaan. Gebruik deze modus **enkel** als je vanuit `bug-analyze-test-failure` komt of als de gebruiker expliciet naar een analyse in `skills-analyses/` verwijst.
 
 ## Bronnen: enkel wat de gebruiker vertelt (manuele modus)
 
@@ -28,19 +28,19 @@ Deze skill heeft twee modi:
    - vrije velden (bv. **Tijdstip van optreden**, **Statistieken**, **Toestel/OS**, **Browser**, **App-versie**, **Geteste gebruiker**, **Bijlagen**) in één bericht met een lijstje van wat ontbreekt.
    - Zegt de gebruiker dat er voor een veld niets is, vul dan de lege waarde in (zie "Lege velden").
 4. **Datum en tijd voor de bestandsnaam ophalen** van het systeem.
-5. **Ticket wegschrijven** naar `bugs/<bestandsnaam>.txt` volgens "Sjabloon".
+5. **Ticket wegschrijven** naar `skills-bugs/<bestandsnaam>.txt` volgens "Sjabloon".
 6. **Rapporteren**: het pad van het bestand, en het ticket zelf in je antwoord, zodat de gebruiker het kan nalezen. Bied aan om iets aan te passen.
 
 ## Bestandsnaam
 
 ```
-bugs/<YYYY-MM-DD>_<HH-mm>_<korte-beschrijving>.txt
+skills-bugs/<YYYY-MM-DD>_<HH-mm>_<korte-beschrijving>.txt
 ```
 
 - Datum en tijd van het moment van aanmaken, opgehaald met `date "+%Y-%m-%d_%H-%M"` (Bash). Geen `:` in de naam (niet toegelaten in Windows).
 - Korte beschrijving: in de taal van het ticket, kleine letters, kebab-case, zonder accenten of leestekens, maximaal ±50 tekens.
-- Voorbeeld: `bugs/2026-11-04_14-35_admin-kan-geen-foto-toevoegen-bij-nieuw-bedrijf.txt`
-- Bestaat de map `bugs/` nog niet, maak ze dan aan. De map staat in `.gitignore`.
+- Voorbeeld: `skills-bugs/2026-11-04_14-35_admin-kan-geen-foto-toevoegen-bij-nieuw-bedrijf.txt`
+- Bestaat de map `skills-bugs/` nog niet, maak ze dan aan. De map staat in `.gitignore`.
 
 ## Velden
 
@@ -217,13 +217,13 @@ SampleLog.txt
 
 ## Testmodus
 
-Je komt vanuit `bug-analyze-test-failure`: een gefaalde Playwright-test is geanalyseerd en geclassificeerd als **applicatiebug**. De analyse staat in `analyses/<bestand>.md`.
+Je komt vanuit `bug-analyze-test-failure`: een gefaalde Playwright-test is geanalyseerd en geclassificeerd als **applicatiebug**. De analyse staat in `skills-analyses/<bestand>.md`.
 
 ### Bronnen in testmodus
 
 Naast wat de gebruiker vertelt, mag je **enkel** deze bronnen gebruiken:
 
-- de analyse in `analyses/`;
+- de analyse in `skills-analyses/`;
 - `test-results/results.json` en de map van de gefaalde test in `test-results/` (`error-context.md`, screenshots, video, trace);
 - de testfile en de page objects die de test gebruikt (om de stappen functioneel te beschrijven);
 - `playwright.config.ts` (projectnaam en toestel) en `.github/workflows/playwright.yml` (besturingssysteem in CI).
@@ -248,7 +248,7 @@ Nog altijd verboden:
 | Workaround | Vragen, anders de lege waarde |
 | Omgevingsinformatie | Device/OS: device uit `playwright.config.ts` (bv. `Desktop Chrome (geëmuleerd)`) en het besturingssysteem (lokaal: van het systeem, CI: `runs-on` uit de workflow, bv. `Ubuntu (GitHub Actions, ubuntu-latest)`). Browser: Playwright-project (bv. `Chromium (Playwright-project chromium)`) en de versie als die in de bronnen staat. App Version: vragen, anders de lege waarde |
 | Aanvullende informatie | Tested user: de rol uit de flow-fixtures. Feature ticket: vragen, anders de lege waarde. Daaronder: de URL bij het falen (uit `error-context.md` of de trace), testdata zonder geheimen, en `Found by automated test <testfile> › <testtitel> [<project>]` |
-| Bijlagen | Paden naar screenshot, video en trace in de map van de analyse (`analyses/<naam>/`), en naar de analyse zelf |
+| Bijlagen | Paden naar screenshot, video en trace in de map van de analyse (`skills-analyses/<naam>/`), en naar de analyse zelf |
 
 ### Werkwijze in testmodus
 

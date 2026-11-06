@@ -1,6 +1,6 @@
 ---
 name: exp-production-twin-diff
-description: Draait dezelfde flow op twee omgevingen (staging en productie, test en staging, ...) en vergelijkt per checkpoint de DOM, de network calls en full-page screenshots pixel voor pixel, met een ruisfilter (elke omgeving draait twee keer; wat binnen dezelfde omgeving al verschilt, telt niet). Vraagt de twee URL's en per omgeving of het productie is. Met productie erbij is de flow strikt alleen-lezen; tussen twee niet-productie-omgevingen mag de flow ook versturen en data wijzigen, na toestemming per sessie. Draait het script twin-diff.js naast de skill, levert een HTML-rapport in twin-diffs/, classificeert elk verschil en logt de gekozen bugs via bug-create-report. Gebruik dit wanneer de gebruiker twee omgevingen wil vergelijken (staging vs. productie, test vs. staging, acceptatie vs. productie), wil weten wat er verschilt, een visuele of DOM-diff tussen twee URL's wil, of voor of na een release wil controleren of omgevingen gelijk zijn.
+description: Draait dezelfde flow op twee omgevingen (staging en productie, test en staging, ...) en vergelijkt per checkpoint de DOM, de network calls en full-page screenshots pixel voor pixel, met een ruisfilter (elke omgeving draait twee keer; wat binnen dezelfde omgeving al verschilt, telt niet). Vraagt de twee URL's en per omgeving of het productie is. Met productie erbij is de flow strikt alleen-lezen; tussen twee niet-productie-omgevingen mag de flow ook versturen en data wijzigen, na toestemming per sessie. Draait het script twin-diff.js naast de skill, levert een HTML-rapport in skills-twin-diffs/, classificeert elk verschil en logt de gekozen bugs via bug-create-report. Gebruik dit wanneer de gebruiker twee omgevingen wil vergelijken (staging vs. productie, test vs. staging, acceptatie vs. productie), wil weten wat er verschilt, een visuele of DOM-diff tussen twee URL's wil, of voor of na een release wil controleren of omgevingen gelijk zijn.
 ---
 
 # Production twin diff
@@ -73,7 +73,7 @@ Het script leest één JSON-bestand. Schrijf het naar de **scratchpad**, niet in
       "httpCredentialsEnv": ["STAGING_USER", "STAGING_PASSWORD"] }
   ],
   "allowWrites": true,
-  "outDir": "twin-diffs/2026-11-06_14-30_contact-formulier",
+  "outDir": "skills-twin-diffs/2026-11-06_14-30_contact-formulier",
   "browser": "chromium",
   "viewport": { "width": 1280, "height": 720 },
   "runs": 2,
@@ -148,7 +148,7 @@ Locator-velden: `role` (+ `name`), `label`, `placeholder`, `text`, `testId` of `
 6. **Opruimen** (enkel na versturen): zie Regels.
 7. **Classificeren** (zie hieronder) en **rapporteren** in de chat (zie "Rapporteren").
 8. **Bugs kiezen**: vraag met AskUserQuestion (multiSelect) welke bevindingen een bugticket worden. Start voor elke gekozen bevinding de skill **`bug-create-report`**, met enkel de **feiten uit de sessie**: beide omgevingen met hun URL, het scherm (checkpoint) en de stappen ernaartoe, het verwachte resultaat (gelijk aan welke omgeving, volgens de gebruiker), het werkelijke verschil letterlijk (DOM-regels, request en status, waarde van robots/canonical), en de bijlagen (zie "Bijlagen bij een bugticket"). `bug-create-report` vraagt zelf de taal, ernst, prioriteit en wat ontbreekt.
-9. **Aanbieden** om het rapport te openen: `start "" "twin-diffs/<naam>/index.html"` (Windows) of `open` (macOS). Open het niet zonder te vragen.
+9. **Aanbieden** om het rapport te openen: `start "" "skills-twin-diffs/<naam>/index.html"` (Windows) of `open` (macOS). Open het niet zonder te vragen.
 
 ## Verschillen classificeren
 
@@ -168,7 +168,7 @@ Een verschil is altijd **richting-neutraal**: zeg welke kant wat heeft ("staging
 ## Output
 
 ```
-twin-diffs/<YYYY-MM-DD>_<HH-mm>_<korte-beschrijving>/
+skills-twin-diffs/<YYYY-MM-DD>_<HH-mm>_<korte-beschrijving>/
   index.html                      # rapport: overzicht, per checkpoint pagina, screenshots, DOM-diff, network
   summary.json                    # alles per checkpoint (a = eerste omgeving, b = tweede), plus de uids per run
   dom-<checkpoint>.diff           # volledige DOM-diff (- A, + B, ~ ruis)
@@ -185,15 +185,15 @@ Bij een checkpoint met een **visueel verschil** (pixels die verschillen en geen 
 De uitsnede omvat **alle** verschillen op dat checkpoint samen. Is het verschil hoger dan 1200 px (bv. alles onder een extra element is verschoven), dan toont de uitsnede enkel het begin, want daar zit de oorzaak. `summary.json` meldt dat met `files.bug.truncated` en het script met "cut off". In `summary.json` staan ook de grenzen: `pixels.diffBox` (het verschil) en `files.bug.crop` (de uitsnede), als `[x0, y0, x1, y1]`.
 
 - Korte beschrijving: kleine letters, kebab-case, zonder accenten, maximaal ±50 tekens (bv. de `name` uit de config).
-- `twin-diffs/` staat in `.gitignore`. Screenshots van productie kunnen klantdata bevatten: deel het rapport niet verder zonder dat te controleren.
+- `skills-twin-diffs/` staat in `.gitignore`. Screenshots van productie kunnen klantdata bevatten: deel het rapport niet verder zonder dat te controleren.
 - De config in de scratchpad bevat geen geheimen (enkel namen van `.env`-variabelen) en hoort niet in het project.
 
 ## Bijlagen bij een bugticket
 
-De afbeelding van een visueel verschil gaat naar het bugticket, niet naar een eigen rapport. De weg is altijd: **`bug-side-by-side.png` → `bugs/media/` → veld Bijlagen van `bug-create-report` → `bug-html-report`**. Die laatste zoekt bijlagen in `bugs/media/` en koppelt ze aan een ticket via de bestandsnamen in het veld Bijlagen. Maak dus zelf geen HTML met de afbeeldingen en verwijs in het ticket niet naar `twin-diffs/`.
+De afbeelding van een visueel verschil gaat naar het bugticket, niet naar een eigen rapport. De weg is altijd: **`bug-side-by-side.png` → `skills-bugs/media/` → veld Bijlagen van `bug-create-report` → `bug-html-report`**. Die laatste zoekt bijlagen in `skills-bugs/media/` en koppelt ze aan een ticket via de bestandsnamen in het veld Bijlagen. Maak dus zelf geen HTML met de afbeeldingen en verwijs in het ticket niet naar `skills-twin-diffs/`.
 
-1. **Kopieer** `shots/<checkpoint>/bug-side-by-side.png` naar `bugs/media/<YYYY-MM-DD>_twin-diff_<checkpoint>_<korte-naam-bevinding>.png` (kebab-case, zonder accenten). Dat is standaard de **enige** bijlage. De uitsneden per omgeving (`bug-<omgeving>.png`) en de volledige screenshots enkel als de gebruiker erom vraagt.
-2. **Geef het pad** `bugs/media/<bestand>.png` mee aan `bug-create-report`, zodat het letterlijk in het veld **Bijlagen** komt.
+1. **Kopieer** `shots/<checkpoint>/bug-side-by-side.png` naar `skills-bugs/media/<YYYY-MM-DD>_twin-diff_<checkpoint>_<korte-naam-bevinding>.png` (kebab-case, zonder accenten). Dat is standaard de **enige** bijlage. De uitsneden per omgeving (`bug-<omgeving>.png`) en de volledige screenshots enkel als de gebruiker erom vraagt.
+2. **Geef het pad** `skills-bugs/media/<bestand>.png` mee aan `bug-create-report`, zodat het letterlijk in het veld **Bijlagen** komt.
 3. **Bekijk de afbeelding eerst met Read**: toont ze de bevinding duidelijk?
    - Ja: meegeven.
    - Er staan **meerdere bevindingen** op één checkpoint en de afbeelding toont ze samen: meegeven, en in het ticket beschrijven waar de bevinding van dit ticket zit (bv. "de knop rechtsboven in de rode kader").

@@ -17,9 +17,9 @@ Haal uit de vraag van de gebruiker, en vraag wat ontbreekt:
 - **testfile en testtitel** (bv. `tests/installation/installation.spec.ts` en `"Wanneer de gebruiker de installatiepagina opent, zijn alle titels zichtbaar"`);
 - **browser/project** waarin hij faalde, als dat bekend is;
 - **context**: alleen in CI? alleen in één browser? sinds een bepaalde release? alleen bij parallel draaien?
-- **bestaand bewijs**: een analyse in `analyses/` (van `bug-analyze-test-failure`), CI-artefacten (`test-results`, `playwright-report`) of een `trace.zip`. Dit is de sterkste bron. Vraag er altijd naar als de flaky run uit CI komt.
+- **bestaand bewijs**: een analyse in `skills-analyses/` (van `bug-analyze-test-failure`), CI-artefacten (`test-results`, `playwright-report`) of een `trace.zip`. Dit is de sterkste bron. Vraag er altijd naar als de flaky run uit CI komt.
 
-Bestaat er al een analyse in `analyses/` voor deze test, begin daar dan en doe dat werk niet opnieuw.
+Bestaat er al een analyse in `skills-analyses/` voor deze test, begin daar dan en doe dat werk niet opnieuw.
 
 ## Toestemming om te draaien
 
@@ -64,7 +64,7 @@ Lijkt een van deze de enige oplossing, dan is de oorzaak nog niet gevonden of li
 1. **Input verzamelen** (zie "Input"). Lees de testfile en de page objects, componenten en fixtures die de test gebruikt.
 2. **Bestaand bewijs eerst**: analyseer een CI-trace of een bestaande analyse vóór je lokaal draait (zie "Traces vergelijken").
 3. **Toestemming vragen** voor het testplan (één keer).
-4. **Bewijs bewaren**: kopieer `test-results/` na **elke** run naar `analyses/<naam>/<fase>/` (bv. `reproductie-serieel`, `reproductie-parallel`, `verificatie`). Een volgende run maakt `test-results/` leeg.
+4. **Bewijs bewaren**: kopieer `test-results/` na **elke** run naar `skills-analyses/<naam>/<fase>/` (bv. `reproductie-serieel`, `reproductie-parallel`, `verificatie`). Een volgende run maakt `test-results/` leeg.
 5. **Reproduceren** volgens het plan. Tel per run hoeveel van de 20 herhalingen faalden, uit `test-results/results.json` (elke herhaling is een aparte entry in `specs[].tests[]` met eigen `status`). Gefaalde herhalingen hebben een map met `-repeat<N>` in de naam.
 6. **Niet gereproduceerd?** Als zowel serieel als parallel 20/20 groen zijn en er geen trace van een rode run is: **stop**. Zeg dat de flakiness lokaal niet te reproduceren is en gok geen oorzaak. Stel voor wat wel kan helpen: de CI-artefacten van een rode run aanleveren, een andere browser proberen (apart vragen), of de context aanvullen.
 7. **Oorzaak bepalen** door rode en groene runs te vergelijken (zie "Traces vergelijken" en "Typische oorzaken").
@@ -107,8 +107,8 @@ Het **verschil** tussen rood en groen is het bewijs. Een oorzaak zonder zo'n ver
 ## Bestandsnaam
 
 ```
-analyses/<YYYY-MM-DD>_<HH-mm>_flaky-<korte-beschrijving>.md
-analyses/<YYYY-MM-DD>_<HH-mm>_flaky-<korte-beschrijving>/<fase>/   (bewijs per run)
+skills-analyses/<YYYY-MM-DD>_<HH-mm>_flaky-<korte-beschrijving>.md
+skills-analyses/<YYYY-MM-DD>_<HH-mm>_flaky-<korte-beschrijving>/<fase>/   (bewijs per run)
 ```
 
 Datum en tijd van het systeem, met `date "+%Y-%m-%d_%H-%M"` (Bash). Korte beschrijving in het Nederlands, kebab-case, zonder accenten, maximaal ±50 tekens.
@@ -121,7 +121,7 @@ Datum en tijd van het systeem, met `date "+%Y-%m-%d_%H-%M"` (Bash). Korte beschr
 - **Datum en tijd:** <YYYY-MM-DD HH:mm>
 - **Test:** `<file>:<regel>` › <testtitel> [<project>]
 - **Context:** <van de gebruiker, bv. "faalt soms in CI">
-- **Bewijs:** `analyses/<naam>/`
+- **Bewijs:** `skills-analyses/<naam>/`
 
 ## Reproductie
 

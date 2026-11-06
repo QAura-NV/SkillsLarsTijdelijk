@@ -39,7 +39,7 @@ Gedrag dat de server bepaalt (batchjobs om middernacht, rapporten per dag, serve
 
 ## Scenario's (Europe/Brussels)
 
-Gebruik altijd deze vaste scenario's, zodat elke sessie vergelijkbaar is. Gebruik de ID in de chat, in screenshots, bestandsnamen en bugtickets (bv. `bugs/media/2026-11-06_time-traveler_T2_duur.png`).
+Gebruik altijd deze vaste scenario's, zodat elke sessie vergelijkbaar is. Gebruik de ID in de chat, in screenshots, bestandsnamen en bugtickets (bv. `skills-bugs/media/2026-11-06_time-traveler_T2_duur.png`).
 
 De starttijd ligt telkens **30 seconden voor** het moment zelf: je begint de flow ervoor en laat de wissel gebeuren **midden in de flow**.
 
@@ -112,7 +112,7 @@ Kan je niet controleren wat er bewaard werd, of hangt het resultaat af van de se
    1. Verse browser (`browser_close`, dan de app openen). Moet de flow ingelogd zijn, laat de gebruiker nu inloggen.
    2. Klok verzetten en de pagina herladen (zie "Hoe je het nabootst"). Controleer met `new Date().toString()` dat de app de juiste tijd ziet.
    3. De flow starten **voor** de wissel, de wissel laten gebeuren met `runFor` of `fastForward`, en de flow afmaken **na** de wissel. Controleer zowel wat de app voor als na de wissel toont.
-   4. De uitkomst per controle bepalen. Neem bij elke bug of vraag een screenshot in `bugs/media/<YYYY-MM-DD>_time-traveler_<scenario-id>_<controle>.png` (de echte datum van vandaag, niet de verzette).
+   4. De uitkomst per controle bepalen. Neem bij elke bug of vraag een screenshot in `skills-bugs/media/<YYYY-MM-DD>_time-traveler_<scenario-id>_<controle>.png` (de echte datum van vandaag, niet de verzette).
 5. **Opruimen**: verwijder testdata als de app dat toelaat (enkel met het akkoord uit stap 3).
 6. **Bevindingen tonen** in de chat (zie "Rapporteren") en vraag met AskUserQuestion (multiSelect) welke bevindingen een bugticket worden.
 7. **Bugs loggen**: start voor elke gekozen bevinding de skill **`bug-create-report`**. Geef als beschrijving enkel de **feiten uit de sessie**: de app en het scherm, het scenario als **concrete stappen** (bv. "Zet de klok van het toestel op 31-10-2027 02:59:30 (Europe/Brussels, zomertijd) en start de timer; wacht 2 minuten", niet "T2"), het verwachte resultaat, het werkelijke resultaat (met de getoonde en verstuurde datums letterlijk), of het in de browser of op de server ontstaat, en het pad naar de screenshot als bijlage. Vermeld dat de klok enkel in de browser verzet werd. `bug-create-report` vraagt zelf de taal, ernst, prioriteit en wat ontbreekt.

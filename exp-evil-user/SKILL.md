@@ -32,7 +32,7 @@ Invoer met rare waarden (emoji, 10.000 tekens, SQL-achtige strings) hoort bij de
 
 Gebruik altijd deze vaste persona's en hun gedragingen, zodat elke sessie vergelijkbaar is. Een persona is een **verzameling gedragingen**, geen rollenspel: voer de gedragingen uit, en beschrijf de bevindingen feitelijk.
 
-Persona's hebben **geen persoonsnamen** en geen beschrijving van leeftijd, beroep of andere kenmerken van mensen: enkel het gedrag. Gebruik in de chat, in screenshots, bestandsnamen en bugtickets altijd de naam en de **slug** uit de tabel (bv. `bugs/media/2026-11-05_evil-user_toetsenbord_focus.png`).
+Persona's hebben **geen persoonsnamen** en geen beschrijving van leeftijd, beroep of andere kenmerken van mensen: enkel het gedrag. Gebruik in de chat, in screenshots, bestandsnamen en bugtickets altijd de naam en de **slug** uit de tabel (bv. `skills-bugs/media/2026-11-05_evil-user_toetsenbord_focus.png`).
 
 | Persona (slug) | Gedragingen |
 |---|---|
@@ -86,7 +86,7 @@ Kan je niet controleren wat er bewaard werd, zeg dat dan bij de uitkomst in plaa
 3. **Plan voorleggen** met één AskUserQuestion:
    - welke persona's en welke gedragingen voor deze flow (je voorstel als eerste optie);
    - **mag je in deze sessie versturen en data wijzigen**, ook dubbel? Opties: ja, enkel in deze app · nee, enkel navigeren en klikken zonder iets te versturen. Meld bij "ja" welke data er (eventueel dubbel) aangemaakt wordt en of je die kan opruimen.
-4. **Uitvoeren**: per persona en per gedrag de flow doorlopen, de uitkomst bepalen en de app terugzetten (vertraging en `offline` uit, zoom en venster terug, tabs sluiten). Neem bij elke bug of vraag een screenshot in `bugs/media/<YYYY-MM-DD>_evil-user_<persona-slug>_<gedrag>.png`. Kijk voor dubbele acties ook in `browser_network_requests` hoeveel verzoeken er vertrokken.
+4. **Uitvoeren**: per persona en per gedrag de flow doorlopen, de uitkomst bepalen en de app terugzetten (vertraging en `offline` uit, zoom en venster terug, tabs sluiten). Neem bij elke bug of vraag een screenshot in `skills-bugs/media/<YYYY-MM-DD>_evil-user_<persona-slug>_<gedrag>.png`. Kijk voor dubbele acties ook in `browser_network_requests` hoeveel verzoeken er vertrokken.
 5. **Opruimen**: verwijder testdata en duplicaten als de app dat toelaat (enkel met het akkoord uit stap 3).
 6. **Bevindingen tonen** in de chat (zie "Rapporteren") en vraag met AskUserQuestion (multiSelect) welke bevindingen een bugticket worden.
 7. **Bugs loggen**: start voor elke gekozen bevinding de skill **`bug-create-report`**. Geef als beschrijving enkel de **feiten uit de sessie**: de app en het scherm, de persona en het gedrag als **concrete stappen** (bv. "Klik 3 keer kort na elkaar op Bestellen", niet "de persona klikt"), het verwachte resultaat (zoals in de normale doorloop), het werkelijke resultaat (met foutmeldingen letterlijk en het aantal verzoeken) en het pad naar de screenshot als bijlage. `bug-create-report` vraagt zelf de taal, ernst, prioriteit en wat ontbreekt.

@@ -110,7 +110,7 @@ Kleine, bijhorende wijzigingen (een fixture registreren in `fixtures/index.ts`, 
 Meld deze in het antwoord als **waarschuwing**, zonder iets aan te passen:
 
 - **Geheimen**: `.env` staged, of een wachtwoord, token, API-key of `Authorization`-header in de diff. Noem het bestand en de regel, **niet de waarde**.
-- **Lokale output** die niet in git hoort: `bugs/`, `analyses/`, `explorations/`, `twin-diffs/`, `.playwright-mcp/`, `test-results/`, `playwright-report/`, `*.why-did-this-pass.spec.ts`.
+- **Lokale output** die niet in git hoort: `skills-bugs/`, `skills-analyses/`, `skills-explorations/`, `skills-twin-diffs/`, `.playwright-mcp/`, `test-results/`, `playwright-report/`, `*.why-did-this-pass.spec.ts`.
 - **Debugresten** in toegevoegde regels: `test.only`, `test.skip` zonder reden, `console.log` in tests of page objects, `page.pause()`, `waitForTimeout`.
 
 ## Antwoord

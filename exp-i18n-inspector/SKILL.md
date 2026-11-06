@@ -64,7 +64,7 @@ Het script leest één JSON-bestand. Schrijf het naar de **scratchpad**, niet in
 ```json
 {
   "name": "home-en-contact",
-  "outDir": "i18n-inspections/2026-11-06_15-00_home-en-contact",
+  "outDir": "skills-i18n-inspections/2026-11-06_15-00_home-en-contact",
   "languages": [
     { "code": "nl", "url": "https://test.example.be/nl" },
     { "code": "fr", "url": "https://test.example.be/fr" },
@@ -145,7 +145,7 @@ Een kandidaat is pas een bug als je hem **gezien** hebt: in de afbeelding (overl
 ## Output
 
 ```
-i18n-inspections/<YYYY-MM-DD>_<HH-mm>_<korte-beschrijving>/
+skills-i18n-inspections/<YYYY-MM-DD>_<HH-mm>_<korte-beschrijving>/
   summary.json                              # alles per pagina > viewport > taal, plus de verwachte notatie per taal
   texts/<pagina>.tsv                        # pad, tekst per taal (eerste viewport), voor het naast elkaar lezen
   shots/<pagina>/<viewport>/<taal>.png      # full page per taal, met overloop rood en sleutels oranje omkaderd
@@ -155,20 +155,20 @@ i18n-inspections/<YYYY-MM-DD>_<HH-mm>_<korte-beschrijving>/
 
 - Korte beschrijving: kleine letters, kebab-case, zonder accenten, maximaal ±50 tekens (bv. de `name` uit de config).
 - In een `finding-…png` staat de taal waarin de bevinding voorkomt in een **rode kader**; een taal waarin het element niet bestaat, toont "—".
-- `i18n-inspections/` staat in `.gitignore`. Er komt **geen HTML-rapport**: de afbeeldingen zijn bedoeld voor de bugtickets.
+- `skills-i18n-inspections/` staat in `.gitignore`. Er komt **geen HTML-rapport**: de afbeeldingen zijn bedoeld voor de bugtickets.
 - De config in de scratchpad bevat geen geheimen en hoort niet in het project.
 
 ## Bijlagen bij een bugticket
 
-De weg is altijd: **afbeelding van het script → `bugs/media/` → veld Bijlagen van `bug-create-report` → `bug-html-report`** (die de bijlagen in `bugs/media/` koppelt via de bestandsnamen in het veld Bijlagen).
+De weg is altijd: **afbeelding van het script → `skills-bugs/media/` → veld Bijlagen van `bug-create-report` → `bug-html-report`** (die de bijlagen in `skills-bugs/media/` koppelt via de bestandsnamen in het veld Bijlagen).
 
 1. **Kies de afbeelding**: voor een sleutel of overloop de `finding-<nn>-<type>.png` van dat element (de talen naast elkaar, de foute taal rood omkaderd). Voor een ontbrekende vertaling, notatie of taalinstelling zonder eigen afbeelding: `side-by-side.png` van die pagina en viewport, als het zichtbaar is in het bovenste deel.
-   **Geen afbeelding = geen bijlage.** Is de bevinding niet zichtbaar op het scherm (`title`, `alt`, `aria-label`, `[sr]`-tekst, `html lang`, `hreflang`), dan krijgt het ticket geen bijlage (`Niet opgegeven`). Zet de teksten per taal letterlijk in Werkelijk resultaat. Geef **nooit** `texts/<pagina>.tsv` of `summary.json` mee: dat zijn werkbestanden voor de inspectie, met alle teksten van de pagina en technische paden, en ze blijven lokaal in `i18n-inspections/`.
+   **Geen afbeelding = geen bijlage.** Is de bevinding niet zichtbaar op het scherm (`title`, `alt`, `aria-label`, `[sr]`-tekst, `html lang`, `hreflang`), dan krijgt het ticket geen bijlage (`Niet opgegeven`). Zet de teksten per taal letterlijk in Werkelijk resultaat. Geef **nooit** `texts/<pagina>.tsv` of `summary.json` mee: dat zijn werkbestanden voor de inspectie, met alle teksten van de pagina en technische paden, en ze blijven lokaal in `skills-i18n-inspections/`.
 2. **Bekijk ze met Read**: toont ze de bevinding duidelijk? Zo niet, geef ze niet mee.
-3. **Kopieer** ze naar `bugs/media/<YYYY-MM-DD>_i18n_<pagina>_<viewport>_<korte-naam-bevinding>.png` (kebab-case, zonder accenten). Eén afbeelding per ticket is de standaard; de full-page screenshot per taal enkel als de gebruiker erom vraagt.
-4. **Geef het pad** `bugs/media/<bestand>.png` mee aan `bug-create-report`, zodat het letterlijk in het veld **Bijlagen** komt.
+3. **Kopieer** ze naar `skills-bugs/media/<YYYY-MM-DD>_i18n_<pagina>_<viewport>_<korte-naam-bevinding>.png` (kebab-case, zonder accenten). Eén afbeelding per ticket is de standaard; de full-page screenshot per taal enkel als de gebruiker erom vraagt.
+4. **Geef het pad** `skills-bugs/media/<bestand>.png` mee aan `bug-create-report`, zodat het letterlijk in het veld **Bijlagen** komt.
 
-Maak zelf geen uitsneden of bewerkingen: gebruik enkel wat het script maakte. Verwijs in het ticket niet naar `i18n-inspections/`.
+Maak zelf geen uitsneden of bewerkingen: gebruik enkel wat het script maakte. Verwijs in het ticket niet naar `skills-i18n-inspections/`.
 
 ## Rapporteren
 

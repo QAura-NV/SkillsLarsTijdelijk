@@ -65,7 +65,7 @@ Kan je niet controleren wat er bewaard werd (er is geen manier om het item terug
 3. **Plan voorleggen** met één AskUserQuestion:
    - welke formulieren en velden, en welke categorieën per veld (je voorstel als eerste optie);
    - **mag je in deze sessie versturen?** Opties: ja, enkel op deze pagina · nee, enkel invullen en de validatie in de browser bekijken. Meld bij "ja" hoeveel verzendingen het plan ongeveer telt en of er data blijft staan.
-4. **Uitvoeren**: per veld en per invoer invullen, (enkel met akkoord) versturen, en de uitkomst bepalen. Neem bij elke bug of vraag een screenshot in `bugs/media/<YYYY-MM-DD>_form-gremlin_<veld>_<categorie>.png`. Herstel na elke invoer het formulier naar een neutrale toestand.
+4. **Uitvoeren**: per veld en per invoer invullen, (enkel met akkoord) versturen, en de uitkomst bepalen. Neem bij elke bug of vraag een screenshot in `skills-bugs/media/<YYYY-MM-DD>_form-gremlin_<veld>_<categorie>.png`. Herstel na elke invoer het formulier naar een neutrale toestand.
 5. **Bevindingen tonen** in de chat (zie "Rapporteren") en vraag met AskUserQuestion (multiSelect) welke bevindingen een bugticket worden.
 6. **Bugs loggen**: start voor elke gekozen bevinding de skill **`bug-create-report`**. Geef als beschrijving enkel de **feiten uit de sessie**: de pagina, het veld, de exacte invoer, wat je deed, het verwachte resultaat (netjes geweigerd of correct bewaard), het werkelijke resultaat (met de foutmelding letterlijk) en het pad naar de screenshot als bijlage. `bug-create-report` vraagt zelf de taal, ernst, prioriteit en wat ontbreekt.
 7. **Browser sluiten** met `browser_close`.

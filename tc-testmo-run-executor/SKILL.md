@@ -1,6 +1,6 @@
 ---
 name: tc-testmo-run-executor
-description: Haalt een manuele testrun (of een map of losse cases) op uit Testmo, voert elke testcase stap voor stap uit in de browser via de Playwright MCP en bepaalt per stap en per case een resultaat (Passed, Failed, Blocked, Retest, Skipped) met bewijs. Leest enkel uit Testmo en stuurt nooit resultaten terug - het verslag met de voorgestelde resultaten komt lokaal in testmo-runs/. Verstuurt en wijzigt data in de app enkel na toestemming per sessie. Gebruik dit wanneer de gebruiker een manuele Testmo-run, regressierun, testset of Testmo-cases wil laten uitvoeren, afvinken of naspelen in de browser.
+description: Haalt een manuele testrun (of een map of losse cases) op uit Testmo, voert elke testcase stap voor stap uit in de browser via de Playwright MCP en bepaalt per stap en per case een resultaat (Passed, Failed, Blocked, Retest, Skipped) met bewijs. Leest enkel uit Testmo en stuurt nooit resultaten terug - het verslag met de voorgestelde resultaten komt lokaal in skills-testmo-runs/. Verstuurt en wijzigt data in de app enkel na toestemming per sessie. Gebruik dit wanneer de gebruiker een manuele Testmo-run, regressierun, testset of Testmo-cases wil laten uitvoeren, afvinken of naspelen in de browser.
 ---
 
 # Een manuele Testmo-run uitvoeren
@@ -11,7 +11,7 @@ De skill doet **enkel drie dingen**:
 
 1. **Ophalen**: een manuele run (of een map of losse cases) uit Testmo lezen, met de preconditions, stappen en verwachte resultaten.
 2. **Uitvoeren**: elke case stap voor stap uitvoeren via de Playwright MCP, en per stap vaststellen of het verwachte resultaat er is.
-3. **Rapporteren**: een lokaal verslag in `testmo-runs/` met per case een voorgesteld resultaat, een notitie en bewijs.
+3. **Rapporteren**: een lokaal verslag in `skills-testmo-runs/` met per case een voorgesteld resultaat, een notitie en bewijs.
 
 **Testmo is alleen-lezen.** Gebruik enkel de `get_*`- en `search_*`-tools van de Testmo MCP. Roep **nooit** een `create_*`-, `update_*`-, `append_*`-, `complete_*`-, `submit_*`- of `delete_*`-tool aan, ook niet als de gebruiker tijdens de sessie vraagt om "het even door te zetten": zeg dan dat deze skill dat niet doet, en dat het verslag de resultaten bevat om ze zelf in Testmo te zetten.
 
@@ -46,7 +46,7 @@ De velden zijn HTML: lees ze als tekst (lijsten, `<br />` als regeleinde). Ontbr
 - **Doe wat de stap zegt, letterlijk.** Vul niets aan wat er niet staat. Zoek een knop of link op zijn **zichtbare naam** zoals in de stap ("Klik op 'Get Started'" → link of knop met die naam).
 - **Controleer elk verwacht resultaat** met de toegankelijkheidsboom (`browser_snapshot`) en de URL, niet met een gok op basis van een screenshot. Een lijst verwachte items (koppen, velden, kolommen) controleer je **item per item**.
 - **Tekst vergelijken**: hoofdletters, witruimte en leestekens aan het einde tellen niet als afwijking, maar noteer ze wel (bv. case zegt "Html test reports", pagina toont "HTML Test Reports"). Een ander woord, een ontbrekend item of een andere volgorde (als de stap een volgorde noemt) is een afwijking.
-- **Bewijs**: één screenshot per case na de laatste stap, en één bij elke stap die faalt, in `testmo-runs/media/<YYYY-MM-DD>_run-<id>_case-<case-id>_stap-<n>.png`. Kijk bij een fout ook in `browser_console_messages` (errors) en `browser_network_requests` (status ≥ 400).
+- **Bewijs**: één screenshot per case na de laatste stap, en één bij elke stap die faalt, in `skills-testmo-runs/media/<YYYY-MM-DD>_run-<id>_case-<case-id>_stap-<n>.png`. Kijk bij een fout ook in `browser_console_messages` (errors) en `browser_network_requests` (status ≥ 400).
 - **Faalt een stap**, voer de volgende stappen alleen uit als ze er niet van afhangen. Hangen ze er wel van af, dan krijgen ze "niet uitgevoerd".
 - **Elke case begint schoon**: navigeer opnieuw naar de start-URL, zodat een case niet afhangt van de vorige.
 
@@ -73,13 +73,13 @@ Gebruik de statussen van het project (ophalen met `get_run` en `expands=statuses
    - **mag je in deze sessie versturen en data wijzigen in de app?** Opties: ja, enkel in deze app · nee, enkel navigeren en lezen.
    - ontbreekt een start-URL, vraag die hier.
 4. **Uitvoeren** per case (zie "Uitvoeren"), en meld na elke case kort in de chat: de case, het resultaat en de reden.
-5. **Verslag schrijven** in `testmo-runs/<YYYY-MM-DD>_run-<id>.md` (zonder run: `..._map-<id>.md` of `..._cases.md`), zie "Verslag".
+5. **Verslag schrijven** in `skills-testmo-runs/<YYYY-MM-DD>_run-<id>.md` (zonder run: `..._map-<id>.md` of `..._cases.md`), zie "Verslag".
 6. **Bevindingen tonen** in de chat en vraag met AskUserQuestion (multiSelect) welke Failed-cases een bugticket worden. Start voor elke gekozen case de skill **`bug-create-report`** met enkel de feiten: de case (ID en titel), de stappen zoals uitgevoerd, het verwachte resultaat uit Testmo, het werkelijke resultaat (letterlijk) en de screenshots als bijlage.
 7. **Browser sluiten** met `browser_close`.
 
 ## Verslag
 
-Het bestand `testmo-runs/<YYYY-MM-DD>_run-<id>.md` bevat:
+Het bestand `skills-testmo-runs/<YYYY-MM-DD>_run-<id>.md` bevat:
 
 - de run (ID, naam, project), de datum, de app-URL, en of er verstuurd werd;
 - een samenvatting: aantal Passed, Failed, Blocked, Retest en Skipped;

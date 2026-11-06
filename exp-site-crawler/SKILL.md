@@ -57,7 +57,7 @@ Het script leest één JSON-bestand. Schrijf het naar de **scratchpad**, niet in
 ```json
 {
   "name": "test-omgeving",
-  "outDir": "crawls/2026-11-06_15-30_test-omgeving",
+  "outDir": "skills-crawls/2026-11-06_15-30_test-omgeving",
   "production": false,
   "startUrls": ["https://test.example.be/nl/"],
   "maxPages": 50,
@@ -129,26 +129,26 @@ Een externe link met status 404 of 410 is een **bug van de site** (de link moet 
 ## Output
 
 ```
-crawls/<YYYY-MM-DD>_<HH-mm>_<korte-beschrijving>/
+skills-crawls/<YYYY-MM-DD>_<HH-mm>_<korte-beschrijving>/
   summary.json                                # instellingen, aantallen, bevindingen, overgeslagen links, alle pagina's
   shots/<nnn>-<pagina>_status-<code>.png      # screenshot van een foutpagina (status ≥ 400)
   shots/<nnn>-<pagina>_broken-image-<n>.png   # uitsnede rond een gebroken afbeelding, rood omkaderd
 ```
 
 - Korte beschrijving: kleine letters, kebab-case, zonder accenten, maximaal ±50 tekens (bv. de `name` uit de config).
-- `crawls/` staat in `.gitignore`. Er komt **geen HTML-rapport**.
+- `skills-crawls/` staat in `.gitignore`. Er komt **geen HTML-rapport**.
 - De config in de scratchpad bevat geen geheimen en hoort niet in het project.
 
 ## Bijlagen bij een bugticket
 
-De weg is altijd: **afbeelding van het script → `bugs/media/` → veld Bijlagen van `bug-create-report` → `bug-html-report`** (die de bijlagen in `bugs/media/` koppelt via de bestandsnamen in het veld Bijlagen).
+De weg is altijd: **afbeelding van het script → `skills-bugs/media/` → veld Bijlagen van `bug-create-report` → `bug-html-report`** (die de bijlagen in `skills-bugs/media/` koppelt via de bestandsnamen in het veld Bijlagen).
 
 - **Enkel wat zichtbaar is, krijgt een afbeelding**:
   - gebroken afbeelding → de `…_broken-image-<n>.png` (bekijk ze eerst met Read: is de lege of kapotte afbeelding te zien?);
   - kapotte interne pagina → de `…_status-<code>.png` (de foutpagina zoals de gebruiker ze ziet).
 - **Geen afbeelding = geen bijlage.** Console-errors, kapotte resources, mixed content, trage requests en kapotte externe links krijgen geen bijlage (`Niet opgegeven`). Zet de feiten **letterlijk** in het ticket: de URL, de status of foutmelding, de pagina's waarop het voorkomt.
-- Geef **nooit** `summary.json` mee: dat is een werkbestand en blijft lokaal in `crawls/`.
-- Kopieer een afbeelding naar `bugs/media/<YYYY-MM-DD>_crawl_<korte-naam-bevinding>.png` (kebab-case, zonder accenten) en geef het pad `bugs/media/<bestand>.png` mee aan `bug-create-report`, zodat het letterlijk in het veld **Bijlagen** komt. Maak zelf geen uitsneden of bewerkingen.
+- Geef **nooit** `summary.json` mee: dat is een werkbestand en blijft lokaal in `skills-crawls/`.
+- Kopieer een afbeelding naar `skills-bugs/media/<YYYY-MM-DD>_crawl_<korte-naam-bevinding>.png` (kebab-case, zonder accenten) en geef het pad `skills-bugs/media/<bestand>.png` mee aan `bug-create-report`, zodat het letterlijk in het veld **Bijlagen** komt. Maak zelf geen uitsneden of bewerkingen.
 
 ## Rapporteren
 

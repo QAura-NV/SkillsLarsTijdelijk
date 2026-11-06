@@ -4,11 +4,11 @@
 // Usage: node generate.js <config.json>
 // config.json:
 // {
-//   "outDir": "bugs/reports/2026-11-05_10-30_alle-bugs",   // created, must not exist yet
+//   "outDir": "skills-bugs/reports/2026-11-05_10-30_alle-bugs",   // created, must not exist yet
 //   "title": "Bugrapport",                                 // optional
 //   "lang": "nl" | "en",
 //   "tickets": [
-//     { "file": "bugs/2026-11-04_12-27_x.txt", "attachments": ["bugs/media/x.png"] }
+//     { "file": "skills-bugs/2026-11-04_12-27_x.txt", "attachments": ["skills-bugs/media/x.png"] }
 //   ]
 // }
 'use strict';

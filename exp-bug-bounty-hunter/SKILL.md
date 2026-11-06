@@ -11,7 +11,7 @@ De skill werkt als een tester in een bug bounty: **één doel**, **een vaste tim
 
 De skill doet **enkel drie dingen**:
 1. **Jagen**: binnen de timebox pogingen doen om het doel te bereiken, en per poging vaststellen wat er gebeurde.
-2. **Rapporteren**: een session report in `explorations/`, met het tokenverbruik van de sessie.
+2. **Rapporteren**: een session report in `skills-explorations/`, met het tokenverbruik van de sessie.
 3. **Bugs loggen**: de bugs die de gebruiker kiest, laten uitschrijven met de skill **`bug-create-report`**.
 
 De skill maakt **geen** regressietests, page objects of andere code. Die maakt de gebruiker achteraf met `aut-create-test`.
@@ -113,11 +113,11 @@ Bepaal de uitkomst op basis van het scherm, de console (errors), het netwerk (st
    - de **timebox** (voorstel: 30 minuten);
    - het **maximum aantal pogingen** (voorstel: 25);
    - **mag je in deze sessie versturen en data wijzigen**? Opties: ja, enkel in deze app · nee, enkel navigeren en klikken. Zonder akkoord worden pogingen die moeten versturen "niet getest";
-   - waar het rapport komt: enkel lokaal in `explorations/` (voorstel) · ook als exploratieve sessie in Testmo (project QAura).
+   - waar het rapport komt: enkel lokaal in `skills-explorations/` (voorstel) · ook als exploratieve sessie in Testmo (project QAura).
 3. **Verkennen**: doorloop de flow van het doel één keer **normaal** via de Playwright MCP, met zo weinig snapshots als nodig. Dat is de referentie voor "verwacht resultaat". Verstuur daarbij niets wat niet onder het akkoord valt. Neem ook geen screenshots.
 4. **Plan voorleggen** met één AskUserQuestion: een genummerde lijst van **hypotheses** (bv. 8 tot 15), elk met de techniek, gerangschikt op kans van slagen en impact. Vraag of het plan goed is (voorstel: ja) of wat er anders moet. Hypotheses die nieuw opkomen tijdens de sessie mogen er later bij, zolang er budget is.
 5. **Timebox starten**: lees de klok (zie "Klok") en meld de start (zie "Meedelen dat je bezig bent").
-6. **Jagen**: werk de hypotheses af. Per poging: klok controleren, uitvoeren, uitkomst bepalen, bij **Gebroken** één keer bevestigen, bewijs bewaren (screenshot en eventueel netwerk in `explorations/<naam>/`), terugzetten, één regel in de chat. Leidt een gevonden bug tot een nieuwe, betere hypothese (een variant die nog meer breekt), neem die dan als volgende.
+6. **Jagen**: werk de hypotheses af. Per poging: klok controleren, uitvoeren, uitkomst bepalen, bij **Gebroken** één keer bevestigen, bewijs bewaren (screenshot en eventueel netwerk in `skills-explorations/<naam>/`), terugzetten, één regel in de chat. Leidt een gevonden bug tot een nieuwe, betere hypothese (een variant die nog meer breekt), neem die dan als volgende.
 7. **Stoppen** als de tijd of de pogingen op zijn, of als het plan op is en er geen zinvolle hypotheses meer zijn. Meld waarom.
 8. **Opruimen**: verwijder testdata en duplicaten als de app dat toelaat (enkel met het akkoord uit stap 2). Zet de browser terug en sluit hem met `browser_close`.
 9. **Tokenverbruik** ophalen: `node .claude/skills/exp-bug-bounty-hunter/tokens.js --since <SINCE>`. Doe dit **als laatste** vóór het rapport, zodat zo veel mogelijk van de sessie meetelt.
@@ -141,14 +141,14 @@ Geef **geen bedrag in euro**: dat hangt af van het model en het abonnement. Geef
 ## Bestandsnaam
 
 ```
-explorations/<YYYY-MM-DD>_<HH-mm>_bug-bounty_<korte-beschrijving>.md
-explorations/<YYYY-MM-DD>_<HH-mm>_bug-bounty_<korte-beschrijving>/   (screenshots en ander bewijs)
+skills-explorations/<YYYY-MM-DD>_<HH-mm>_bug-bounty_<korte-beschrijving>.md
+skills-explorations/<YYYY-MM-DD>_<HH-mm>_bug-bounty_<korte-beschrijving>/   (screenshots en ander bewijs)
 ```
 
 - Datum en tijd van de start van de timebox, met `date "+%Y-%m-%d_%H-%M"`. Geen `:` in de naam.
 - Korte beschrijving van het doel in het Nederlands, kleine letters, kebab-case, zonder accenten, maximaal ±50 tekens. Bv. `checkout-breken`.
 - Screenshots: `<naam>/poging-<nr>_<korte-beschrijving>.png`.
-- `explorations/` staat in `.gitignore`. Maak de map aan als ze nog niet bestaat.
+- `skills-explorations/` staat in `.gitignore`. Maak de map aan als ze nog niet bestaat.
 
 ## Session report
 
@@ -161,7 +161,7 @@ explorations/<YYYY-MM-DD>_<HH-mm>_bug-bounty_<korte-beschrijving>/   (screenshot
 - **Pogingen:** <gedaan> van maximaal <max>
 - **Gestopt omdat:** tijd op | pogingen op | geen hypotheses meer | onderbroken door de gebruiker
 - **Versturen toegelaten:** ja | nee
-- **Bewijs:** `explorations/<naam>/`
+- **Bewijs:** `skills-explorations/<naam>/`
 
 ## Samenvatting
 
@@ -200,7 +200,7 @@ explorations/<YYYY-MM-DD>_<HH-mm>_bug-bounty_<korte-beschrijving>/   (screenshot
 
 **Verwacht:** <zoals bij het verkennen>
 **Werkelijk:** <wat er gebeurde, foutmeldingen letterlijk>
-**Bewijs:** `explorations/<naam>/poging-<nr>_<...>.png`
+**Bewijs:** `skills-explorations/<naam>/poging-<nr>_<...>.png`
 
 ## Alle pogingen
 
